@@ -28,9 +28,9 @@
     </div>
 
     <form method="POST" id="form-comentario">
-        <input id="id_band" type="" value={$detalles->id_band}>
-        <input id="id_user" type="" value={$id}>
-        <input id="priority" type="" value={$priority}>
+        <input id="id_band" type="hidden" value={$detalles->id_band}>
+        <input id="id_user" type="hidden" value={$id}>
+        <input id="priority" type="hidden" value={$priority}>
 
         {if $admin}
             <span class="badge badge-dark">{$admin}</span> <input id="comentario" type="text" size="30" maxlength="30" placeholder="Deje su comentario">
@@ -53,5 +53,4 @@
 </div>
 
 
-<script src="js/btn.js"></script>
 <script src="js/comments.js"></script>

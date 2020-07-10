@@ -60,15 +60,22 @@ class CommentsApiController
         $this->view->response("la tarea con el id número {$id} ha sido borrada", 200);
     }
 
-    public function add()
+    public function add($params = [])
     {
         $body = $this->getData();
-        var_dump($body); die;
-       /* $comentario = $a->coments;
-        $valor = $a->puntage;
-        $id_user = $a->id_user_fk;
-        $id_band = $a->id_band_fk;
+        //var_dump($body);
 
-        $id = $this->model->insert($comentario, $valor, $id_user, $id_band);*/
+        $comentario = $body->coments;
+        $puntaje = $body->puntage;
+        $usuario = $body->id_user_fk;
+        $banda = $body->id_band_fk;
+       $valor = $this->model->insert($comentario, $puntaje, $usuario, $banda); 
+      
+       if ($valor){
+        $this->view->response("Se agrego el comentario", 200);
+        } else{
+        $this->view->response("No se puedo agregar el comentario", 500);
+        }
+      
     }
 }

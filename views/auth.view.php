@@ -29,18 +29,22 @@ class AuthView
         $this->smarty->display('templates/accessGranted.tpl');
     }
 
-    public function choseTask($admin, $priority, $session){
+    public function choseTask($admin, $priority, $session)
+    {
         $this->smarty->assign('admin', $admin);
         $this->smarty->assign('session', $session);
         $this->smarty->assign('priority', $priority);
         $this->smarty->display('templates/choseTask.tpl');
     }
 
-    public function viewFormRegistry($admin, $priority, $session, $error=null){
+    public function viewFormRegistry($admin, $priority, $session, $error = null)
+    {
         $this->smarty->assign('admin', $admin);
         $this->smarty->assign('session', $session);
         $this->smarty->assign('priority', $priority);
         $this->smarty->assign('error', $error);
         $this->smarty->display('templates/userRegistry.tpl');
     }
+
+    
 }

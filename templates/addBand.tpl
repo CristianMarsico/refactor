@@ -26,7 +26,7 @@
 
 
         </thead>
-        <form action="agregar_banda" method="POST" enctype="multipart/form-data">
+        <form action="guardar_banda" method="POST" enctype="multipart/form-data">
             <tbody id="lista">
                 <tr>
                     <td> <input type="text" name="nombre"></td>
@@ -40,7 +40,7 @@
                             {/foreach}
                         </select></td>
 
-                    <td><button type="submit">Agregar datos</button></td>
+                    <td><button  type="submit">Agregar</button></td>
                 </tr>
             </tbody>
             {if $error}

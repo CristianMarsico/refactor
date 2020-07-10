@@ -40,8 +40,9 @@ class ComentsModel{
     public function insert($comentario, $valor, $IdUser, $idBand){
         $db = $this->conection->createConection();
         $sentencia = $db->prepare('INSERT INTO coments (coments, puntage, id_user_fk, id_band_fk) VALUES (?,?,?,?)');
-        $sentencia->execute([$comentario, $valor, $IdUser, $idBand]);
+        return $sentencia->execute([$comentario, $valor, $IdUser, $idBand]);
 
-        return $this->conection->createConection()->lastInsertId();
+        //return $this->conection->createConection()->lastInsertId();
     }
+
 }

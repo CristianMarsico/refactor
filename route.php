@@ -3,8 +3,7 @@
     include 'controllers/auth.controller.php';
     include 'controllers/user.controller.php';
     include 'controllers/band.controller.php';
-
-
+    include 'controllers/genres.controller.php';
 
     define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
@@ -16,10 +15,6 @@
 
     $parametro = explode('/', $action);
 
-    //print_r($GLOBALS);
-    //echo (PHP_EOL);
-    //die (__FILE__);
-
     switch ($parametro[0]) {
         case 'home':
             //----CREO UN OBJETO Y LO INSTANCIO EN LA CLASE GETCONTROLLER             
@@ -30,11 +25,22 @@
             $controller = new HomeController();
             $controller->showBands();
             break;
+        case 'generos':
+            $controller = new HomeController();
+            $controller->showGenres();
+            break;
+        case 'generosmusicales': //------> Muestro lista solo por género musical
+            $controller = new HomeController();
+            $controller->CdsByGenres($parametro[1]);
+            break;
         case 'detalles':
             $controller = new HomeController();
             $controller->showdetails($parametro[1]);
             break;
 
+            /**
+             * ADMIN
+             */
 
         case 'showForm':
             $controller = new AuthController();
@@ -49,9 +55,9 @@
             $controller = new AuthController();
             $controller->register();
             break;
-            case 'newUser':
-                $controller = new AuthController();
-                $controller->verifyRegistry();
+        case 'newUser':
+            $controller = new AuthController();
+            $controller->verifyRegistry();
             break;
         case 'logout':
             $controller = new AuthController();
@@ -63,7 +69,10 @@
             $controller->adminOption();
             break;
 
-            //FORM DE USUARIOS...    
+            /**
+             * ABM USERS
+             */
+
         case 'ABMuser';
             $controller = new UserController();
             $controller->show_A_B_M_Users();
@@ -83,7 +92,11 @@
             $controller = new UserController();
             $controller->editUser($parametro[1]);
             break;
-            //FORM DE USUARIOS... 
+
+            /**
+             * AMB BANDAS
+             */
+
         case 'ABMbandas';
             $controller = new BandsController();
             $controller->show_A_B_M_Bands();
@@ -92,10 +105,56 @@
             $controller = new BandsController();
             $controller->addBand();
             break;
+        case 'guardar_banda';
+            $controller = new BandsController();
+            $controller->save();
+            break;
         case 'eliminar_banda':
             $controller = new BandsController();
             $controller->delete($parametro[1]);
             break;
+        case 'editar_banda':
+            $controller = new BandsController();
+            $controller->edit($parametro[1]);
+            break;
+        case 'guardar_edicion_banda':
+            $controller = new BandsController();
+            $controller->save_edit_band();
+            break;
+
+            /**
+             *ABM GENEROS 
+             */
+
+        case 'ABMgeneros';
+            $controller = new GenresController();
+            $controller->A_B_M_Genres();
+            break;
+        case 'agregar_genero';
+            $controller = new GenresController();
+            $controller->addGenre();
+            break;
+        case 'guardar_genero';
+            $controller = new GenresController();
+            $controller->save();
+            break;
+        case 'eliminar_genero';
+            $controller = new GenresController();
+            $controller->delete($parametro[1]);
+            break;
+        case 'editar_genero';
+            $controller = new GenresController();
+            $controller->edit($parametro[1]);
+            break;
+        case 'guardar_edicion_genero';
+            $controller = new GenresController();
+            $controller->saveEdit();
+            break;
+
+
+
+
+
 
 
 
@@ -104,7 +163,7 @@
 
         default:
             echo 'error';
-            // $controller = new PublicController();
-            //  $controller->showError("operacion desconocida", "images/cds/error.jpg");
+             $controller = new HomeController();
+             $controller->showError("operacion desconocida", "images/cds/error.jpg");
             break;
     }

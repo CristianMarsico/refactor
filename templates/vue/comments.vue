@@ -11,15 +11,13 @@
         </span>
     </div>
     
-    <div class="card" class="col-md-12" >
-      <ul id= "list-comments"class="list-group list-group-flush" v-if="!loading">
-      
+    <div class="card" class="col-md-12">
+      <ul id= "list-comments"class="list-group list-group-flush">
         <li v-for= "coments in comentarios" class="list-group-item">
        <span class="badge badge-dark">Usuario {{coments.username}}</span> - "{{coments.coments}}" - Puntaje: {{coments.puntage}}
-        <button class="btn btn-link" v-if="priority == 1" name="delete" :data-album="(coments.id_coments)">Borrar </button>
+        <button class="btn btn-link" v-if="priority == 1" v-on:click="borrar(coments.id_coments)">Borrar</button>
         </li>
-      </ul>  
-      
+        </ul>
     </div>
 
   </div> 

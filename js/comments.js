@@ -3,22 +3,20 @@
 
 let p = document.getElementById("priority").value;
 
-
 //instalo Vue
 let app = new Vue({
     el: "#app-comments",
     data: {
         promedio: 0,
         priority: p,
-        loading: true,
         comentarios: []
     },
-    /* methods: {
-         borrar: function (id) {
-             deleteComment(id);
-         }
- 
-     }*/
+    methods: {
+        borrar: function(id) {
+            deleteComment(id);
+        }
+
+    }
 });
 
 loadComments(); //al cargar la pagina se muestran todos los comentarios
@@ -30,31 +28,20 @@ function loadComments() {
     fetch('api/comentarios/' + id)
         .then(response => response.json())
         .then(a => {
-            app.loading = false
+            app.comentarios = a; //guardo en la variable los datos que retorna el modelo 
+            let suma = 0;
+            let contador = 0;
 
-            if (a != "no existe la tarea") {
-
-
-                app.comentarios = a; //guardo en la variable los datos que retorna el modelo 
-                let suma = 0;
-                let contador = 0;
-
-                for (let comment of a) {
-                    suma = suma + parseInt(comment.puntage);
-                    contador++;
-                }
-                let promedio = (suma / contador).toFixed(2);
-                app.promedio = promedio;
-
-                if (contador == 0) {
-                    app.promedio = 0;
-                }
-
-
-
+            for (let comment of a) {
+                suma = suma + parseInt(comment.puntage);
+                contador++;
             }
+            let promedio = (suma / contador).toFixed(2);
+            app.promedio = promedio;
 
-
+            if (contador == 0) {
+                app.promedio = 0;
+            }
 
         })
         .catch(error => console.log(error));
@@ -72,4 +59,44 @@ function deleteComment(id) {
             loadComments();
         })
         .catch(error => console.log(error));
+}
+document.querySelector("#form-comentario").addEventListener('submit', addComment);
+
+function addComment(){
+    event.preventDefault(); 
+
+    let banda= document.querySelector("#id_band").value;
+    
+    //recuperamos los valores del formulario
+    let comentario = document.getElementById("comentario").value; 
+    let puntaje = document.getElementById("puntuacion").value;
+    let usuario =  document.getElementById("id_user").value;
+
+    //creamos el objeto
+    let info = {
+        "coments": comentario,
+        "puntage": puntaje,
+        "id_user_fk": usuario,
+        "id_band_fk": banda
+    }
+    console.log(comentario);
+    if(comentario == " " || puntaje == " "){
+        alert("Hay campos vacios");
+        return false;
+    } 
+    else{
+    fetch('api/comentario', { 
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(info)
+    })
+    .then(response => {
+        console.log(response);
+    })
+    .then(function() {
+        document.getElementById("comentario").value = " "; 
+        loadComments();
+    })
+    .catch(error =>console.log(error));
+    }
 }

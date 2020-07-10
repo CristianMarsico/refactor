@@ -11,11 +11,19 @@ class AuthHelper
     */
     public static function checklogged()
     {
-        self::start();
+        if (!isset($_SESSION['IS_LOGGED'])) {
+
+            header('Location: ' . BASE_URL . 'showForm');
+            die();
+        } else if (isset($_SESSION['IS_LOGGED']) && ($_SESSION ['PRIORITY']!=1)){
+            header('Location: ' . BASE_URL . 'home');
+            die();
+        }
+      /*  self::start();
         if (!isset($_SESSION['ID_USER'])) {
             header('Location: ' . BASE_URL . 'showForm');
             die();
-        }
+        }*/
     }
     static public function session() {
         self::start(); 

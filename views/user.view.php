@@ -48,7 +48,7 @@ class UserView
         $this->smarty->display('templates/showBands.tpl');
     }
 
-    public function addBand($bandas, $admin, $priority, $error = null, $session)
+    public function addBand($bandas=null, $admin, $priority, $session, $error = null)
     {
         $this->smarty->assign('admin', $admin);
         $this->smarty->assign('priority', $priority);
@@ -56,5 +56,40 @@ class UserView
         $this->smarty->assign('error', $error);
         $this->smarty->assign('session', $session);
         $this->smarty->display('templates/addBand.tpl');
+    }
+
+    public function showFormEditForBands($admin, $priority,$session, $datos=null, $genero=null, $error=null){
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('priority', $priority);
+        $this->smarty->assign('session', $session);
+        $this->smarty->assign('datos', $datos);
+        $this->smarty->assign('genero', $genero);
+        $this->smarty->assign('error', $error);
+        $this->smarty->display('templates/showFormEditForBands.tpl');
+    }
+    public function showGenres($admin, $priority, $session, $generos)
+    {
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('session', $session);
+        $this->smarty->assign('priority', $priority);
+        $this->smarty->assign('generos', $generos);
+        $this->smarty->display('templates/showGenres.tpl');
+    }
+
+    public function showAddGenres($admin, $priority, $session, $error=null){
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('session', $session);
+        $this->smarty->assign('priority', $priority);
+        $this->smarty->assign('error', $error);
+        $this->smarty->display('templates/addGenres.tpl');
+    }
+
+    public function showFormEditGenres($admin, $priority, $session, $id, $error = null){
+        $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('session', $session);
+        $this->smarty->assign('priority', $priority);
+        $this->smarty->assign('id', $id);
+        $this->smarty->assign('error', $error);
+        $this->smarty->display('templates/showFormEditGenres.tpl');
     }
 }

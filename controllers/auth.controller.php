@@ -33,6 +33,15 @@ class AuthController
 
         $username = $_POST['username'];
         $pass = $_POST['pass'];
+        $datos = $this->verifyUser($username, $pass);
+        if($datos){
+            header("Location: " . BASE_URL . 'tareas');
+
+            //$this->view->accessGranted($this->admin, $this->priority, $this->session);
+        } else {
+            $this->view->show_Form($this->priority, $this->session, $this->admin, "datos invalidos");
+        }
+/*
 
         //traigo usuario solamente despues verifico el password.
         $user = $this->model->getUser($username);
@@ -49,7 +58,7 @@ class AuthController
             }
         } else {
             $this->view->show_Form($this->priority, $this->session, $this->admin, "datos invalidos");
-        }
+        }*/
     }
 
     public function logout()

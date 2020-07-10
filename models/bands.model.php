@@ -55,4 +55,24 @@ class BandModel
         $sentencia = $db->prepare('DELETE FROM band WHERE id_band = ?');
         $sentencia->execute([$id]);
     }
+
+    public function dates($nombre, $album){
+        $db = $this->conection->createConection();
+        $sentencia = $db->prepare('SELECT * FROM band WHERE name = ? AND album = ?');
+        $sentencia->execute([$nombre , $album]);
+        return $sentencia->fetch(PDO::FETCH_OBJ);
+    
+    }
+
+    public function update($nombre, $album, $cancion, $año, $genero, $id, $imagen = null){
+        $pathImg = null;
+
+        if ($imagen) {
+            $pathImg = $this->uploadImage($imagen);
+        }
+        $db = $this->conection->createConection();
+        $sentencia = $db->prepare("UPDATE  `band` SET  `name` = ?, 
+                                 `album` = ?,  `songs` = ?, `year` = ?,`id_genres_fk` = ?, `image` = ? WHERE `id_band` = ?");
+       return $sentencia->execute([$nombre, $album, $cancion, $año, $genero, $pathImg, $id]);
+    }
 }
