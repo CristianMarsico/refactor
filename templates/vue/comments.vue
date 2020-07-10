@@ -10,8 +10,10 @@
           Puntuacion promedio: {{promedio}}
         </span>
     </div>
-    
-    <div class="card" class="col-md-12">
+    <div v-if= "error == true">
+          <p>no hay comentarios</p>
+    </div>
+    <div class="card" class="col-md-12" v-if= "loading == false">
       <ul id= "list-comments"class="list-group list-group-flush">
         <li v-for= "coments in comentarios" class="list-group-item">
        <span class="badge badge-dark">Usuario {{coments.username}}</span> - "{{coments.coments}}" - Puntaje: {{coments.puntage}}

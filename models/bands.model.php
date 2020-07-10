@@ -56,15 +56,16 @@ class BandModel
         $sentencia->execute([$id]);
     }
 
-    public function dates($nombre, $album){
+    public function dates($nombre, $album)
+    {
         $db = $this->conection->createConection();
         $sentencia = $db->prepare('SELECT * FROM band WHERE name = ? AND album = ?');
-        $sentencia->execute([$nombre , $album]);
+        $sentencia->execute([$nombre, $album]);
         return $sentencia->fetch(PDO::FETCH_OBJ);
-    
     }
 
-    public function update($nombre, $album, $cancion, $año, $genero, $id, $imagen = null){
+    public function update($nombre, $album, $cancion, $año, $genero, $id, $imagen = null)
+    {
         $pathImg = null;
 
         if ($imagen) {
@@ -73,6 +74,17 @@ class BandModel
         $db = $this->conection->createConection();
         $sentencia = $db->prepare("UPDATE  `band` SET  `name` = ?, 
                                  `album` = ?,  `songs` = ?, `year` = ?,`id_genres_fk` = ?, `image` = ? WHERE `id_band` = ?");
-       return $sentencia->execute([$nombre, $album, $cancion, $año, $genero, $pathImg, $id]);
+        return $sentencia->execute([$nombre, $album, $cancion, $año, $genero, $pathImg, $id]);
+    }
+
+    public function bandsByComments($id)
+    {
+        $db = $this->conection->createConection();
+        $sentencia = $db->prepare(' SELECT user.username , coments.id_coments,coments.coments, 
+        coments.puntage, coments.id_user_fk, coments.id_band_fk 
+        FROM band JOIN user JOIN coments 
+        ON coments.id_user_fk = user.id_user AND coments.id_band_fk = band.id_band WHERE band.id_band = ?');
+        $sentencia->execute([$id]);
+        return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 }

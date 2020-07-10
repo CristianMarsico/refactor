@@ -34,7 +34,7 @@ class CommentsApiController
         if ($a)
             $this->view->response($a, 200);
         else
-            $this->view->response("no existe la tarea", 200);
+            $this->view->response("no hay comentarios", 200);
     }
 
 
